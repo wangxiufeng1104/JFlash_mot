@@ -297,12 +297,12 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>D:\SVN\Trunk\platform\art2000\bootloader\bootrom\include</state>
-          <state>D:\SVN\Trunk\platform\art2000\driver\include</state>
-          <state>D:\SVN\Trunk\platform\art2000\arch\ARMCM4\Include</state>
-          <state>D:\SVN\Trunk\platform\art2000\arch\Core\Include</state>
-          <state>D:\SVN\tools\J-Flash_RAMCode\Inc</state>
-          <state>D:\SVN\Trunk\platform\art2000</state>
+          <state>$PROJ_DIR$\..\..\Trunk\platform\art2000\bootloader\bootrom\include</state>
+          <state>$PROJ_DIR$\..\..\Trunk\platform\art2000\driver\include</state>
+          <state>$PROJ_DIR$\..\J-Flash_RAMCode\Inc</state>
+          <state>$PROJ_DIR$\..\..\Trunk\platform\art2000</state>
+          <state>$PROJ_DIR$\..\..\Trunk\platform\art2000\arch\include</state>
+          <state>$PROJ_DIR$\Inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>

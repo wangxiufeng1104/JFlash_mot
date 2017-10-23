@@ -25,6 +25,9 @@ Notes when creating a RAMCode:
 #include "qspi_rom.h"
 #include "flash_rom.h"
 #include "reg_sysc_cmp.h"
+
+#define CYPRESS_FLASH           0
+#define XTX_FALSH               1
 /*********************************************************************
 *
 *       Defines, configurable
@@ -76,6 +79,8 @@ void FLASH_GetDesc(void* pContext, RAMCODE_RESULT_INFO* pResult, const RAMCODE_C
   pDesc->AlgoDesc.SupportMultiSectorProg  = 0;                           // 1 = RAMCode support programming of multiple pages/sectors by one call of FLASH_Program()
   pDesc->AlgoDesc.AlgoRequiresClockSpeed  = 0;                           // 1 = Clock speed is required for flash programming
   pDesc->AlgoDesc.HaltIfPCLeavesRAMCode   = 1;                           // 1 = PC is not allowed to leave the RAMCode during flash programming. Some devices provide a Flash programming code, placed in ROM, which handles the flash programming and which is activated by this RAMCode. In this case the parameter should be 0.
+
+#if (CYPRESS_FLASH == 1)
   pDesc->FlashDesc.NumBlocks              = 2;                           // Number of flash block regions we have. For example, if the flash has 2 sectors which are 4 KBytes in size and 1 sector which is 2 KBytes in size, we have 2 flash block regions
   pDesc->FlashDesc.BlockInfo[0].Offset       = 0x0;                     // Offset of the flash block, relative to the base address of the flash area. Needs only to be filled if there is a gap between the blocks or if we have sectors of different sizes. Otherwise the calling applications assumes that all blocks are in sequential order.
   pDesc->FlashDesc.BlockInfo[0].NumSectors   = 32;                        // Number of sectors (1 sector = smallest erasable unit) in this flash block
@@ -83,6 +88,14 @@ void FLASH_GetDesc(void* pContext, RAMCODE_RESULT_INFO* pResult, const RAMCODE_C
   pDesc->FlashDesc.BlockInfo[1].Offset       = 0x20000;                     // Offset of the flash block, relative to the base address of the flash area. Needs only to be filled if there is a gap between the blocks or if we have sectors of different sizes. Otherwise the calling applications assumes that all blocks are in sequential order.
   pDesc->FlashDesc.BlockInfo[1].NumSectors   = 510;                        // Number of sectors (1 sector = smallest erasable unit) in this flash block
   pDesc->FlashDesc.BlockInfo[1].SectorSize   = 1 << (SECTOR_SIZE_SHIFT+4);      // Size of one sector
+#elif (XTX_FALSH == 1)
+  pDesc->FlashDesc.NumBlocks              = 1;                           // Number of flash block regions we have. For example, if the flash has 2 sectors which are 4 KBytes in size and 1 sector which is 2 KBytes in size, we have 2 flash block regions
+  pDesc->FlashDesc.BlockInfo[0].Offset       = 0x0;                     // Offset of the flash block, relative to the base address of the flash area. Needs only to be filled if there is a gap between the blocks or if we have sectors of different sizes. Otherwise the calling applications assumes that all blocks are in sequential order.
+  pDesc->FlashDesc.BlockInfo[0].NumSectors   = 512;                        // Number of sectors (1 sector = smallest erasable unit) in this flash block
+  pDesc->FlashDesc.BlockInfo[0].SectorSize   = 1 << SECTOR_SIZE_SHIFT;      // Size of one sector  
+#endif
+
+
 }
 
 /*********************************************************************
