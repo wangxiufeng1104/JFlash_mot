@@ -1,182 +1,118 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>2</fileVersion>
-  <fileChecksum>569824291</fileChecksum>
-  <configuration>
-    <name>Release_RAMCode_CortexM</name>
-    <outputs>
-      <file>$PROJ_DIR$\Inc\RAMCodeV2.h</file>
-      <file>$PROJ_DIR$\Lib\Specific_CortexM_ASM_LE.o</file>
-      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\bootloader\bootrom\src\flash_rom.c</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\driver\include\spi.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
-      <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\qspi_rom.o</file>
-      <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\RAMCode_Specific_Template.o</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\bootloader\bootrom\src\qspi_rom.c</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
-      <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\dma_rom.o</file>
-      <file>$PROJ_DIR$\Setup\RAMCode_Specific_Release.icf</file>
-      <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\qspi_rom.pbi</file>
-      <file>$PROJ_DIR$\Src\RAMCode_Specific_Template.c</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\plf.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\intrinsics.h</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\driver\include\reg_base.h</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\driver\include\reg_sysc_cmp.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\bootloader\bootrom\src\dma_rom.c</file>
-      <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\dma_rom.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\c\cmsis_iar.h</file>
-      <file>$PROJ_DIR$\Release_RAMCode_CortexM\Exe\RAMCodeSpecific_Release.mot</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\driver\include\reg_qspi.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
-      <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\flash_rom.pbi</file>
-      <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\flash_rom.o</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\bootloader\bootrom\include\flash_rom.h</file>
-      <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\Start_RAMCodeSpecific.pbd</file>
-      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdbool.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\string.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\bootloader\bootrom\include\dma_rom.h</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\driver\include\reg_dma.h</file>
-      <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\RAMCode_Specific_Template.pbi</file>
-      <file>$PROJ_DIR$\Release_RAMCode_CortexM\Exe\RAMCodeSpecific_Release.out</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\bootloader\bootrom\include\qspi_rom.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
-      <file>$TOOLKIT_DIR$\lib\rt6M_tl.a</file>
-      <file>$PROJ_DIR$\Release_RAMCode_CortexM\List\RAMCodeSpecific_Release.map</file>
-      <file>$TOOLKIT_DIR$\lib\m6M_tl.a</file>
-      <file>$TOOLKIT_DIR$\lib\dl6M_tln.a</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\driver\include\flash.h</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\arch\include\types.h</file>
-      <file>$PROJ_DIR$\..\..\Trunk\platform\art2000\arch\include\cmsis_compiler.h</file>
-    </outputs>
-    <file>
-      <name>$PROJ_DIR$\..\..\Trunk\platform\art2000\bootloader\bootrom\src\flash_rom.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 28</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 27</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 33 20 2 26 8 10 35 11 31 5 40 47 32 41 34 25 18 48 23 17 16 29</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 33 20 2 26 8 10 35 11 31 5 40 47 32 41 34 25 18 48 23 17 16 29</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\Trunk\platform\art2000\bootloader\bootrom\src\qspi_rom.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 6</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 14</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 40 47 32 41 20 2 26 8 10 35 11 31 34 25 18 48 23 17 16 36 37 4 19</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 40 47 32 41 20 2 26 8 10 35 11 31 34 25 18 48 23 17 16 36 37 4 19</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Src\RAMCode_Specific_Template.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 7</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 38</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 0 40 47 32 41 20 2 26 8 10 35 11 31 34 25 18 48 23 17 16 29 19</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 0 40 47 32 41 20 2 26 8 10 35 11 31 34 25 18 48 23 17 16 29 19</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\Trunk\platform\art2000\bootloader\bootrom\src\dma_rom.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 12</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 22</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 36 47 32 41 20 2 26 8 10 35 11 31 34 37 18 48 23 17</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 36 47 32 41 20 2 26 8 10 35 11 31 34 37 18 48 23 17</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Release_RAMCode_CortexM\Exe\RAMCodeSpecific_Release.out</name>
-      <outputs>
-        <tool>
-          <name>OBJCOPY</name>
-          <file> 24</file>
-        </tool>
-        <tool>
-          <name>ILINK</name>
-          <file> 43</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 13 12 28 6 7 1 42 44 45</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>[ROOT_NODE]</name>
-      <outputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 39 43</file>
-        </tool>
-      </outputs>
-    </file>
-  </configuration>
+    <fileVersion>4</fileVersion>
+    <fileChecksum>2043310894</fileChecksum>
+    <configuration>
+        <name>Release_RAMCode_CortexM</name>
+        <outputs>
+            <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\flash.pbi</file>
+            <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\flash.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+            <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\RAMCode_Specific_Template.pbi</file>
+            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+            <file>$PROJ_DIR$\Src\flash\flash.h</file>
+            <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\Start_RAMCodeSpecific.pbd</file>
+            <file>$PROJ_DIR$\Release_RAMCode_CortexM\List\RAMCodeSpecific_Release.map</file>
+            <file>$TOOLKIT_DIR$\lib\dl6M_tln.a</file>
+            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+            <file>$TOOLKIT_DIR$\lib\m6M_tl.a</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+            <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\flash.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+            <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\RAMCode_Specific_Template.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+            <file>$PROJ_DIR$\Release_RAMCode_CortexM\Obj\RAMCode_Specific_Template.o</file>
+            <file>$PROJ_DIR$\Inc\reg_ln_qspi.h</file>
+            <file>$PROJ_DIR$\Lib\Specific_CortexM_ASM_LE.o</file>
+            <file>$PROJ_DIR$\Inc\RAMCodeV2.h</file>
+            <file>$PROJ_DIR$\Release_RAMCode_CortexM\Exe\RAMCodeSpecific_Release.out</file>
+            <file>$PROJ_DIR$\Src\RAMCode_Specific_Template.c</file>
+            <file>$PROJ_DIR$\Setup\RAMCode_Specific_Release.icf</file>
+            <file>$TOOLKIT_DIR$\lib\rt6M_tl.a</file>
+            <file>$PROJ_DIR$\Src\flash\flash.c</file>
+            <file>$PROJ_DIR$\Release_RAMCode_CortexM\Exe\LN821x_Flash_2MB.mot</file>
+        </outputs>
+        <file>
+            <name>[ROOT_NODE]</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 20 7</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Release_RAMCode_CortexM\Exe\RAMCodeSpecific_Release.out</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 7</file>
+                </tool>
+                <tool>
+                    <name>OBJCOPY</name>
+                    <file> 25</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 22 12 16 18 23 10 8</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Src\RAMCode_Specific_Template.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 3</file>
+                </tool>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 16</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 14</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 2 11 4 5 9 19 15 13</file>
+                </tool>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 19 5 11 9 4 2 15 13</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Src\flash\flash.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 0</file>
+                </tool>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 12</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 1</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 15 17 9 13 5 11 4 2</file>
+                </tool>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 5 11 9 4 2 15 13 17</file>
+                </tool>
+            </inputs>
+        </file>
+    </configuration>
 </project>
-
-

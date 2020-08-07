@@ -22,9 +22,8 @@ Notes when creating a RAMCode:
 ---------------------------END-OF-HEADER------------------------------
 */
 #include "RAMCodeV2.h"
-#include "qspi_rom.h"
-#include "flash_rom.h"
-#include "reg_sysc_cmp.h"
+#include "flash.h"
+
 
 #define CYPRESS_FLASH           0
 #define XTX_FALSH               1
@@ -63,36 +62,36 @@ Notes when creating a RAMCode:
 *    (3) May request via pDesc->AlgoDesc.NumExtraBytes that more than 64 bytes are needed for pContext. However, these 64 bytes are only available *after* this function, so this function should not try to make use of them.
 */
 void FLASH_GetDesc(void* pContext, RAMCODE_RESULT_INFO* pResult, const RAMCODE_CMD_INFO* pInfo) {
-  (void)pContext;
-  (void)pResult;
-  RAMCODE_DESC* pDesc = (RAMCODE_DESC*)pInfo->pBuffer;
-  sysc_cmp_spif_io_en_setf(1);
-  flash_init();
-  
-  pDesc->AlgoDesc.NumExtraBytes           = 0;                           // Normally not used. If the 64 bytes of the pContext area are not sufficient, additional bytes can be requested by the RAMCode, by filling in this parameter.
-  pDesc->AlgoDesc.MinAlign                = PAGE_SIZE_SHIFT;             // This means the calling application always programs a multiple of 2^8 bytes at once. (In this sample we assume, this is the size of one page, so the algorithm can always be sure to get 1 complete page of data, when programming)
-  pDesc->AlgoDesc.AutoErase               = 0;                           // 1 = Sector is auto-erased before programmed (Only supported by some flashes)
-  pDesc->AlgoDesc.SupportRead             = 1;                           // 1 = Separate read function is necessary to read back content of flash memory (necessary for NAND, SPI-NOR, DataFlash), 0 = No read function is needed. Flash is memory-mapped (Connected to data bus of the CPU. E.g. this is the case when using a parallel NOR flash)
-  pDesc->AlgoDesc.SupportEraseSector      = 1;                           // 1 = RAMCode supports sector erase
-  pDesc->AlgoDesc.SupportEraseChip        = 1;                           // 1 = RAMCode supports chip erase
-  pDesc->AlgoDesc.SupportMultiSectorErase = 0;                           // 1 = RAMCode supports erasure of multiple sectors by one call of FLASH_Erase()
-  pDesc->AlgoDesc.SupportMultiSectorProg  = 0;                           // 1 = RAMCode support programming of multiple pages/sectors by one call of FLASH_Program()
-  pDesc->AlgoDesc.AlgoRequiresClockSpeed  = 0;                           // 1 = Clock speed is required for flash programming
-  pDesc->AlgoDesc.HaltIfPCLeavesRAMCode   = 1;                           // 1 = PC is not allowed to leave the RAMCode during flash programming. Some devices provide a Flash programming code, placed in ROM, which handles the flash programming and which is activated by this RAMCode. In this case the parameter should be 0.
+    (void)pContext;
+    (void)pResult;
+    RAMCODE_DESC* pDesc = (RAMCODE_DESC*)pInfo->pBuffer;
+
+    flash_init();
+
+    pDesc->AlgoDesc.NumExtraBytes           = 0;                           // Normally not used. If the 64 bytes of the pContext area are not sufficient, additional bytes can be requested by the RAMCode, by filling in this parameter.
+    pDesc->AlgoDesc.MinAlign                = PAGE_SIZE_SHIFT;             // This means the calling application always programs a multiple of 2^8 bytes at once. (In this sample we assume, this is the size of one page, so the algorithm can always be sure to get 1 complete page of data, when programming)
+    pDesc->AlgoDesc.AutoErase               = 0;                           // 1 = Sector is auto-erased before programmed (Only supported by some flashes)
+    pDesc->AlgoDesc.SupportRead             = 1;                           // 1 = Separate read function is necessary to read back content of flash memory (necessary for NAND, SPI-NOR, DataFlash), 0 = No read function is needed. Flash is memory-mapped (Connected to data bus of the CPU. E.g. this is the case when using a parallel NOR flash)
+    pDesc->AlgoDesc.SupportEraseSector      = 1;                           // 1 = RAMCode supports sector erase
+    pDesc->AlgoDesc.SupportEraseChip        = 1;                           // 1 = RAMCode supports chip erase
+    pDesc->AlgoDesc.SupportMultiSectorErase = 1;                           // 1 = RAMCode supports erasure of multiple sectors by one call of FLASH_Erase()
+    pDesc->AlgoDesc.SupportMultiSectorProg  = 1;                           // 1 = RAMCode support programming of multiple pages/sectors by one call of FLASH_Program()
+    pDesc->AlgoDesc.AlgoRequiresClockSpeed  = 0;                           // 1 = Clock speed is required for flash programming
+    pDesc->AlgoDesc.HaltIfPCLeavesRAMCode   = 1;                           // 1 = PC is not allowed to leave the RAMCode during flash programming. Some devices provide a Flash programming code, placed in ROM, which handles the flash programming and which is activated by this RAMCode. In this case the parameter should be 0.
 
 #if (CYPRESS_FLASH == 1)
-  pDesc->FlashDesc.NumBlocks              = 2;                           // Number of flash block regions we have. For example, if the flash has 2 sectors which are 4 KBytes in size and 1 sector which is 2 KBytes in size, we have 2 flash block regions
-  pDesc->FlashDesc.BlockInfo[0].Offset       = 0x0;                     // Offset of the flash block, relative to the base address of the flash area. Needs only to be filled if there is a gap between the blocks or if we have sectors of different sizes. Otherwise the calling applications assumes that all blocks are in sequential order.
-  pDesc->FlashDesc.BlockInfo[0].NumSectors   = 32;                        // Number of sectors (1 sector = smallest erasable unit) in this flash block
-  pDesc->FlashDesc.BlockInfo[0].SectorSize   = 1 << SECTOR_SIZE_SHIFT;      // Size of one sector
-  pDesc->FlashDesc.BlockInfo[1].Offset       = 0x20000;                     // Offset of the flash block, relative to the base address of the flash area. Needs only to be filled if there is a gap between the blocks or if we have sectors of different sizes. Otherwise the calling applications assumes that all blocks are in sequential order.
-  pDesc->FlashDesc.BlockInfo[1].NumSectors   = 510;                        // Number of sectors (1 sector = smallest erasable unit) in this flash block
-  pDesc->FlashDesc.BlockInfo[1].SectorSize   = 1 << (SECTOR_SIZE_SHIFT+4);      // Size of one sector
+    pDesc->FlashDesc.NumBlocks                 = 2;                           // Number of flash block regions we have. For example, if the flash has 2 sectors which are 4 KBytes in size and 1 sector which is 2 KBytes in size, we have 2 flash block regions
+    pDesc->FlashDesc.BlockInfo[0].Offset       = 0x0;                     // Offset of the flash block, relative to the base address of the flash area. Needs only to be filled if there is a gap between the blocks or if we have sectors of different sizes. Otherwise the calling applications assumes that all blocks are in sequential order.
+    pDesc->FlashDesc.BlockInfo[0].NumSectors   = 32;                        // Number of sectors (1 sector = smallest erasable unit) in this flash block
+    pDesc->FlashDesc.BlockInfo[0].SectorSize   = 1 << SECTOR_SIZE_SHIFT;      // Size of one sector
+    pDesc->FlashDesc.BlockInfo[1].Offset       = 0x20000;                     // Offset of the flash block, relative to the base address of the flash area. Needs only to be filled if there is a gap between the blocks or if we have sectors of different sizes. Otherwise the calling applications assumes that all blocks are in sequential order.
+    pDesc->FlashDesc.BlockInfo[1].NumSectors   = 510;                        // Number of sectors (1 sector = smallest erasable unit) in this flash block
+    pDesc->FlashDesc.BlockInfo[1].SectorSize   = 1 << (SECTOR_SIZE_SHIFT+4);      // Size of one sector
 #elif (XTX_FALSH == 1)
-  pDesc->FlashDesc.NumBlocks              = 1;                           // Number of flash block regions we have. For example, if the flash has 2 sectors which are 4 KBytes in size and 1 sector which is 2 KBytes in size, we have 2 flash block regions
-  pDesc->FlashDesc.BlockInfo[0].Offset       = 0x0;                     // Offset of the flash block, relative to the base address of the flash area. Needs only to be filled if there is a gap between the blocks or if we have sectors of different sizes. Otherwise the calling applications assumes that all blocks are in sequential order.
-  pDesc->FlashDesc.BlockInfo[0].NumSectors   = 512;                        // Number of sectors (1 sector = smallest erasable unit) in this flash block
-  pDesc->FlashDesc.BlockInfo[0].SectorSize   = 1 << SECTOR_SIZE_SHIFT;      // Size of one sector  
+    pDesc->FlashDesc.NumBlocks                 = 1;                           // Number of flash block regions we have. For example, if the flash has 2 sectors which are 4 KBytes in size and 1 sector which is 2 KBytes in size, we have 2 flash block regions
+    pDesc->FlashDesc.BlockInfo[0].Offset       = 0x0;                     // Offset of the flash block, relative to the base address of the flash area. Needs only to be filled if there is a gap between the blocks or if we have sectors of different sizes. Otherwise the calling applications assumes that all blocks are in sequential order.
+    pDesc->FlashDesc.BlockInfo[0].NumSectors   = 512;                        // Number of sectors (1 sector = smallest erasable unit) in this flash block
+    pDesc->FlashDesc.BlockInfo[0].SectorSize   = 1 << SECTOR_SIZE_SHIFT;      // Size of one sector  
 #endif
 
 
@@ -132,26 +131,21 @@ void FLASH_GetDesc(void* pContext, RAMCODE_RESULT_INFO* pResult, const RAMCODE_C
 *   >9 = Unspecified error (reserved for further error codes)
 *   <0 = Algo depending error code (usually a small integer such as -1, -2, -3) (Do NOT use)
 */
+extern uint8_t _FLASH_Read(uint32_t offset, uint32_t length, uint8_t *buffer);
+
 void FLASH_Read(void* pContext, RAMCODE_RESULT_INFO* pResult, const RAMCODE_CMD_INFO* pInfo) {
-  volatile U8* pDest;
-  U32 NumBytesRem;
-  U32 Cycles,Remainder,Offset,i;
-  pDest        = pInfo->pBuffer;                                // Specifies where the data read from flash, should be stored
-  NumBytesRem  = pInfo->NumBytes;                               // Number of bytes to be read
-  Offset       = pInfo->Offset;
-  Cycles = NumBytesRem / FLASH_READ_MAX_BYTES;
-  Remainder = NumBytesRem % FLASH_READ_MAX_BYTES;
-  for(i=0;i<Cycles;i++){
-    flash_read(Offset,FLASH_READ_MAX_BYTES,(uint8_t *)pDest);
-    Offset += FLASH_READ_MAX_BYTES;
-    pDest += FLASH_READ_MAX_BYTES;
-  }
-  if(Remainder){
-    flash_read(Offset,Remainder,(uint8_t *)pDest);
-  }
-  
-  pResult->ErrorCode = 0;                                       // This is the default value, so it is not obligatory to set it to 0
-  pResult->NumItemsRem = 0;
+    volatile U8* pDest;
+    U32 NumBytesRem;
+    U32  Offset;
+    pDest        = pInfo->pBuffer;                                // Specifies where the data read from flash, should be stored
+    NumBytesRem  = pInfo->NumBytes;                               // Number of bytes to be read
+    Offset       = pInfo->Offset;
+
+    flash_read(Offset,(uint8_t *)pDest,NumBytesRem);
+    //_FLASH_Read(Offset, NumBytesRem, (uint8_t *)pDest);
+
+    pResult->ErrorCode   = 0;                                       // This is the default value, so it is not obligatory to set it to 0
+    pResult->NumItemsRem = 0;
 }
 
 /*********************************************************************
@@ -185,21 +179,23 @@ void FLASH_Read(void* pContext, RAMCODE_RESULT_INFO* pResult, const RAMCODE_CMD_
 *   <0 = Algo depending error code (usually a small integer such as -1, -2, -3) (Do NOT use)
 */
 void FLASH_Program(void* pContext, RAMCODE_RESULT_INFO* pResult, const RAMCODE_CMD_INFO* pInfo) {
-  volatile U8* pSrc;
-  U32 Offset;
-  U32 NumPages;
-  U32 i;
-  pSrc               = pInfo->pBuffer;
-  NumPages           = pInfo->NumBytes >> PAGE_SIZE_SHIFT;
-  Offset             = pInfo->Offset;
-  for(i=0; i< NumPages; i++)
-  {
-    flash_program_jflash(Offset,1<<PAGE_SIZE_SHIFT,(uint8_t *)pSrc);
-    Offset += (1<<PAGE_SIZE_SHIFT);
-    pSrc += (1<<PAGE_SIZE_SHIFT);
-  }
-  
-  pResult->ErrorCode = 0;    // This is the default value, so it is not obligatory to set it to 0
+    volatile U8* pSrc;
+    U32 Offset;
+    U32 NumPages;
+    U32 i;
+    pSrc               = pInfo->pBuffer;
+    NumPages           = pInfo->NumBytes >> PAGE_SIZE_SHIFT;
+    Offset             = pInfo->Offset;
+    
+    for(i = 0; i < NumPages; i++)
+    {
+        //flash_program_jflash(Offset, 1<<PAGE_SIZE_SHIFT, (uint8_t *)pSrc);
+        flash_write(Offset,(uint8_t *)pSrc,1<<PAGE_SIZE_SHIFT);
+        Offset += (1 << PAGE_SIZE_SHIFT);
+        pSrc   += (1 << PAGE_SIZE_SHIFT);
+    }
+
+    pResult->ErrorCode = 0;    // This is the default value, so it is not obligatory to set it to 0
 }
 
 /*********************************************************************
@@ -242,17 +238,17 @@ void FLASH_Erase(void* pContext, RAMCODE_RESULT_INFO* pResult, const RAMCODE_CMD
   //
   // Erase one or more sectors
   //
-  if (NumSectors) {
-    do {
-      flash_erase_block(Offset,Sector_Erase);
-      Offset += (1 << SECTOR_SIZE_SHIFT);
-    } while (--NumSectors);
-  } else {
-    //
-    // Erase complete flash chip
-    //
-    flash_erase(Offset,FALSH_SIZE_MAX);
-  }
+    if (NumSectors) 
+    {
+        flash_erase(Offset,NumSectors*4*1024);
+    } 
+    else 
+    {
+        //
+        // Erase complete flash chip
+        //
+        flash_chip_ease();
+    }
 }
 
 /*********************************************************************
@@ -286,9 +282,9 @@ void FLASH_Erase(void* pContext, RAMCODE_RESULT_INFO* pResult, const RAMCODE_CMD
 *        So pContext is not already initialized at this point.
 */
 void FLASH_Prepare(void* pContext) {
-  (void)pContext;
-  sysc_cmp_spif_io_en_setf(1);
-  flash_init();
+    (void)pContext;
+
+    flash_init();
 }
 
 /*********************************************************************
